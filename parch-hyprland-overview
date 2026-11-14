@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# parch-hyprland-overview: toggle or launch the Quickshell Hyprland Overview
+
+QS_DIR="/usr/share/parch-hyprland-overview"
+
+if quickshell -p "$QS_DIR" ipc call overview toggle 2>/dev/null; then
+    exit 0
+fi
+
+quickshell -d -p "$QS_DIR"
+for _ in {1..30}; do
+    if quickshell -p "$QS_DIR" ipc call overview open 2>/dev/null; then
+        exit 0
+    fi
+    sleep 0.05
+done
